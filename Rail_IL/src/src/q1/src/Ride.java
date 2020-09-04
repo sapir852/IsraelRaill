@@ -2,28 +2,41 @@ package src.q1.src;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ride {
 
-	// public enum RideType {
-	// Departure, Arrival
-	// };
 
 	private String fromLocation;
 	private String toLocation;
-	// private RideType rideType; // false = Departure, true = Arrival
+	private ArrayList<IntermediateStation>intermSation;
 	private DateTime DepartureTime;
 	private DateTime arrivalTime;
+	
+//	public Ride() {
+//		
+//	}
+	public Ride() {
+		intermSation = new ArrayList<IntermediateStation>();
+		
+	}
+	
 
-	public Ride(String fromLocation, DateTime departureTime, String toLocation, DateTime arrivalTime) {
+	public Ride(String fromLocation, DateTime departureTime,ArrayList<IntermediateStation>intermSation, String toLocation, DateTime arrivalTime) {
 
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
+		this.intermSation = intermSation;
 		DepartureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 	}
-
+	
+	
+	public boolean addIntermediateStation(String name ,DateTime sTime) { 
+		intermSation.add(new IntermediateStation(name, sTime));
+		return true;
+	}
 	public DateTime getDeparturetime() {
 		return DepartureTime;
 	}
@@ -55,10 +68,30 @@ public class Ride {
 	public void setToLocation(String toLocation) {
 		this.toLocation = toLocation;
 	}
+	
+	public ArrayList<IntermediateStation> getIntermSation() {
+		return intermSation;
+	}
+
+
+	public void setIntermSation(ArrayList<IntermediateStation> intermSation) {
+		this.intermSation = intermSation;
+	}
+
 
 	@Override
 	public String toString() {
-		return fromLocation + " " + DepartureTime + " , " + toLocation + " " + arrivalTime;
+		StringBuffer result = new StringBuffer();
+
+		result.append(fromLocation + " " + DepartureTime +"\n");
+		for (IntermediateStation i:intermSation) {
+		     	result.append(i.toString() + "\n");
+		}
+		result.append( toLocation + " " + arrivalTime+"\n");
+	
+		return result.toString();
 	}
+
+	
 
 }

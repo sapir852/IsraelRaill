@@ -1,5 +1,6 @@
 package src.q1.src;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +9,7 @@ public class Main {
 		int choice;
 		Scanner s = new Scanner(System.in);
 
-		IsraelRail r = new IsraelRail();
+		IsraelRail rail = new IsraelRail();
 
 		do {
 			System.out.println("Please select an option:\r\n" + "1 - Travel details\r\n" + "2 - View Travel details\r\n"
@@ -17,12 +18,11 @@ public class Main {
 			choice = s.nextInt();
 			switch (choice) {
 			case 1:
-				addNewRide(s, r);
+				addNewRide(s, rail);
 				break;
 			case 2:
-				r.sortRidesByTime();
-				System.out.println(r.allRidesToString());
-
+				rail.sortRidesByTime();
+				System.out.println(rail.allRidesToString());
 				break;
 
 			}
@@ -33,20 +33,33 @@ public class Main {
 
 	}
 
-	private static void addNewRide(Scanner s, IsraelRail r) {
-
+	private static void addNewRide(Scanner s, IsraelRail rail) {
+		Ride ride = new Ride();
 		s.nextLine();
 		System.out.println("\nPlease enter departure station: ");
 		String fromLocation = s.nextLine();
 
 		DateTime dTime = getDateFromUser(s);
 		s.nextLine();
+		System.out.println("Please press 1- to add intermediate station \n"+ "2- to finish typing intermediate station  ");
+		int choice =s.nextInt();
+		
+		while(choice!=2){
+			s.nextLine();
+		System.out.println("Please enter intermediate station :");
+		String nameIntnermStasion=s.nextLine();
+		DateTime sTime=getDateFromUser(s);
+		ride.addIntermediateStation(nameIntnermStasion, sTime);
+		System.out.println("Please press 1- to add intermediate station \n"+ "2- to finish typing intermediate station  ");
+		choice =s.nextInt();
+		}
+		s.nextLine();
 		System.out.println("Please enter arrival station: ");
 		String toLocation = s.nextLine();
 		DateTime aTime = getDateFromUser(s);
 
-		r.addRide(fromLocation, dTime, toLocation, aTime);
-
+		rail.addRide(fromLocation, dTime,ride.getIntermSation(), toLocation, aTime);
+		
 	}
 
 	public static DateTime getDateFromUser(Scanner s) {
@@ -58,4 +71,8 @@ public class Main {
 
 		return new DateTime(hours, minutes);
 	}
-}
+	
+		
+	}
+
+
