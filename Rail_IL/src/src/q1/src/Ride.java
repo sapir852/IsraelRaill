@@ -91,6 +91,18 @@ public class Ride {
 	
 		return result.toString();
 	}
+	
+	public boolean isIntermStation(String stationName)
+	{
+		for(IntermediateStation station : intermSation)
+		{
+			if(station.getName().equals(stationName))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	
 

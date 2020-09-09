@@ -12,8 +12,8 @@ public class Main {
 		IsraelRail rail = new IsraelRail();
 
 		do {
-			System.out.println("Please select an option:\r\n" + "1 - Travel details\r\n" + "2 - View Travel details\r\n"
-					+ "9 - Exit");
+			System.out.println("Please select an option:\r\n" + "1 - Travel details\r\n" + "2 - View Travel details\r\n" +
+		"3 - serach a ride \n " + "9 - Exit");
 			System.out.println("Enter your choice: ");
 			choice = s.nextInt();
 			switch (choice) {
@@ -24,7 +24,15 @@ public class Main {
 				rail.sortRidesByTime();
 				System.out.println(rail.allRidesToString());
 				break;
-
+			case 3:
+				s.nextLine();
+				System.out.println("please enter current Station: ");
+				String currentStation = s.nextLine();
+				System.out.println(" please enter destenation: ");
+				String destenation = s.nextLine();
+				DateTime timeDeparture = getDateFromUser(s);
+				System.out.println(rail.sortByThreeStation(currentStation, destenation,timeDeparture));
+				break;
 			}
 
 		}
@@ -41,25 +49,27 @@ public class Main {
 
 		DateTime dTime = getDateFromUser(s);
 		s.nextLine();
-		System.out.println("Please press 1- to add intermediate station \n"+ "2- to finish typing intermediate station  ");
-		int choice =s.nextInt();
-		
-		while(choice!=2){
+		System.out.println(
+				"Please press 1- to add intermediate station \n" + "2- to finish typing intermediate station  ");
+		int choice = s.nextInt();
+
+		while (choice != 2) {
 			s.nextLine();
-		System.out.println("Please enter intermediate station :");
-		String nameIntnermStasion=s.nextLine();
-		DateTime sTime=getDateFromUser(s);
-		ride.addIntermediateStation(nameIntnermStasion, sTime);
-		System.out.println("Please press 1- to add intermediate station \n"+ "2- to finish typing intermediate station  ");
-		choice =s.nextInt();
+			System.out.println("Please enter intermediate station :");
+			String nameIntnermStasion = s.nextLine();
+			DateTime sTime = getDateFromUser(s);
+			ride.addIntermediateStation(nameIntnermStasion, sTime);
+			System.out.println(
+					"Please press 1- to add intermediate station \n" + "2- to finish typing intermediate station  ");
+			choice = s.nextInt();
 		}
 		s.nextLine();
 		System.out.println("Please enter arrival station: ");
 		String toLocation = s.nextLine();
 		DateTime aTime = getDateFromUser(s);
 
-		rail.addRide(fromLocation, dTime,ride.getIntermSation(), toLocation, aTime);
-		
+		rail.addRide(fromLocation, dTime, ride.getIntermSation(), toLocation, aTime);
+
 	}
 
 	public static DateTime getDateFromUser(Scanner s) {
@@ -71,8 +81,5 @@ public class Main {
 
 		return new DateTime(hours, minutes);
 	}
-	
-		
-	}
 
-
+}

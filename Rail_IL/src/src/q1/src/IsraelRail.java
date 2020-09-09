@@ -40,11 +40,11 @@ public class IsraelRail {
 		{
 			boolean fits = true;
 			Ride ride = allRides.get(i);
-			if(!currentStation.trim().isEmpty() && !ride.getFromLocation().equals(currentStation))
+			if(!currentStation.trim().isEmpty() && !ride.getFromLocation().equals(currentStation) && !ride.isIntermStation(currentStation))
 			{
 				fits = false;
 			}
-			if(!destenation.trim().isEmpty() && !ride.getToLocation().equals(destenation))
+			if(!destenation.trim().isEmpty() && !ride.getToLocation().equals(destenation) && !ride.isIntermStation(destenation))
 			{
 				fits = false;
 			}
@@ -65,7 +65,5 @@ public class IsraelRail {
 		return result;
 		
 	}
-			
-		
-
+	
 }
