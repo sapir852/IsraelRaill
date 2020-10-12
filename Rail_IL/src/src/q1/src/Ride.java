@@ -1,7 +1,6 @@
 package src.q1.src;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,16 +9,26 @@ public class Ride {
 
 	private String fromLocation;
 	private String toLocation;
-	private ArrayList<IntermediateStation>intermSation;
+	private ArrayList<IntermediateStation>intermStation;
 	private DateTime DepartureTime;
 	private DateTime arrivalTime;
-	
-//	public Ride() {
-//		
-//	}
+
 	public Ride() {
-		intermSation = new ArrayList<IntermediateStation>();
+		intermStation = new ArrayList<IntermediateStation>();
 		
+	}
+	
+	public Ride(Scanner scan) {
+		this();
+		fromLocation = scan.nextLine();
+		toLocation  = scan.nextLine();
+		int numStation = Integer.parseInt(scan.nextLine());
+		for(int i =0; i < numStation ; i++)
+		{
+			intermStation.add(new IntermediateStation(scan));
+		}
+		DepartureTime = new DateTime(scan);
+		arrivalTime = new DateTime(scan);
 	}
 	
 
@@ -27,14 +36,14 @@ public class Ride {
 
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
-		this.intermSation = intermSation;
+		this.intermStation = intermSation;
 		DepartureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 	}
 	
 	
 	public boolean addIntermediateStation(String name ,DateTime sTime) { 
-		intermSation.add(new IntermediateStation(name, sTime));
+		intermStation.add(new IntermediateStation(name, sTime));
 		return true;
 	}
 	public DateTime getDeparturetime() {
@@ -70,12 +79,12 @@ public class Ride {
 	}
 	
 	public ArrayList<IntermediateStation> getIntermSation() {
-		return intermSation;
+		return intermStation;
 	}
 
 
 	public void setIntermSation(ArrayList<IntermediateStation> intermSation) {
-		this.intermSation = intermSation;
+		this.intermStation = intermSation;
 	}
 
 
@@ -84,7 +93,7 @@ public class Ride {
 		StringBuffer result = new StringBuffer();
 
 		result.append(fromLocation + " " + DepartureTime +"\n");
-		for (IntermediateStation i:intermSation) {
+		for (IntermediateStation i:intermStation) {
 		     	result.append(i.toString() + "\n");
 		}
 		result.append( toLocation + " " + arrivalTime+"\n");
@@ -94,7 +103,7 @@ public class Ride {
 	
 	public boolean isIntermStation(String stationName)
 	{
-		for(IntermediateStation station : intermSation)
+		for(IntermediateStation station : intermStation)
 		{
 			if(station.getName().equals(stationName))
 			{
@@ -102,6 +111,18 @@ public class Ride {
 			}
 		}
 		return false;
+	}
+	
+	public void saveToFile(PrintWriter file)
+	{
+		file.write(fromLocation+ "\n" + toLocation + "\n");
+		file.write(intermStation.size() + "\n");
+		for(IntermediateStation station: intermStation)
+		{
+			station.saveToFile(file);
+		}
+		DepartureTime.saveToFile(file);
+		arrivalTime.saveToFile(file);
 	}
 
 	

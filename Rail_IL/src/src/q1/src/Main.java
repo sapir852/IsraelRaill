@@ -1,5 +1,7 @@
 package src.q1.src;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,36 +10,56 @@ public class Main {
 	public static void main(String[] args) {
 		int choice;
 		Scanner s = new Scanner(System.in);
-
-		IsraelRail rail = new IsraelRail();
-
-		do {
-			System.out.println("Please select an option:\r\n" + "1 - Travel details\r\n" + "2 - View Travel details\r\n" +
-		"3 - serach a ride \n " + "9 - Exit");
-			System.out.println("Enter your choice: ");
-			choice = s.nextInt();
-			switch (choice) {
-			case 1:
-				addNewRide(s, rail);
-				break;
-			case 2:
-				rail.sortRidesByTime();
-				System.out.println(rail.allRidesToString());
-				break;
-			case 3:
-				s.nextLine();
-				System.out.println("please enter current Station: ");
-				String currentStation = s.nextLine();
-				System.out.println(" please enter destenation: ");
-				String destenation = s.nextLine();
-				DateTime timeDeparture = getDateFromUser(s);
-				System.out.println(rail.sortByThreeStation(currentStation, destenation,timeDeparture));
-				break;
+		if(args.length > 0)
+		{
+			
+		}
+		else
+		{
+			IsraelRail rail;
+			try {
+				rail = new IsraelRail(new File("Rides.txt"));
+			} catch(Exception e)
+			{
+				rail = new IsraelRail();
 			}
 
-		}
+			do {
+				System.out.println("Please select an option:\r\n" + "1 - Travel details\r\n" + "2 - View Travel details\r\n" +
+			"3 - serach a ride \n " + "9 - Exit");
+				System.out.println("Enter your choice: ");
+				choice = s.nextInt();
+				switch (choice) {
+				case 1:
+					addNewRide(s, rail);
+					break;
+				case 2:
+					rail.sortRidesByTime();
+					System.out.println(rail.allRidesToString());
+					break;
+				case 3:
+					s.nextLine();
+					System.out.println("please enter current Station: ");
+					String currentStation = s.nextLine();
+					System.out.println(" please enter destenation: ");
+					String destenation = s.nextLine();
+					DateTime timeDeparture = getDateFromUser(s);
+					System.out.println(rail.sortByThreeStation(currentStation, destenation,timeDeparture));
+					break;
+				case 9:
+					try {
+						rail.saveToFile(new File("Rides.txt"));
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				}
 
-		while (choice != 9);
+			}
+
+			while (choice != 9);
+		}
 
 	}
 

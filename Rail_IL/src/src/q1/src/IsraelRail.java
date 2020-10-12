@@ -1,8 +1,11 @@
 package src.q1.src;
 
-import java.security.AllPermission;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class IsraelRail {
 
@@ -12,6 +15,17 @@ public class IsraelRail {
 	public IsraelRail() {
 		allRides = new ArrayList<Ride>();
 		
+	}
+	
+	public IsraelRail(File file) throws FileNotFoundException
+	{
+		this();
+		Scanner scan = new Scanner(file);
+		int numRides = Integer.parseInt(scan.nextLine());
+		for(int i= 0;i <numRides; i++)
+		{
+			allRides.add(new Ride(scan));
+		}
 	}
 
 	public boolean addRide(String fromLocation, DateTime departureTime,ArrayList<IntermediateStation> intermSation, String toLocation, DateTime arrivalTime) {
@@ -64,6 +78,17 @@ public class IsraelRail {
 		}
 		return result;
 		
+	}
+	
+	public void saveToFile(File file) throws FileNotFoundException
+	{
+		PrintWriter pw = new PrintWriter(file);
+		pw.write(allRides.size() + "\n");
+		for(Ride ride : allRides)
+		{
+			ride.saveToFile(pw);
+		}
+		pw.close();
 	}
 	
 }

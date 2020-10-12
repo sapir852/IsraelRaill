@@ -1,5 +1,8 @@
 package src.q1.src;
 
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class IntermediateStation {
 	
 	private String name;
@@ -9,6 +12,11 @@ public class IntermediateStation {
 	public IntermediateStation(String name, DateTime stopTime) {
 		this.name = name;
 		this.stopTime = stopTime;
+	}
+	public IntermediateStation(Scanner scan)
+	{
+		name = scan.nextLine();
+		stopTime = new DateTime(scan);
 	}
 
 
@@ -35,7 +43,11 @@ public class IntermediateStation {
 		return name + ","+  stopTime ;
 	}
 	
-	
+	public void saveToFile(PrintWriter file)
+	{
+		file.write(name + "\n");
+		stopTime.saveToFile(file);
+	}
 	
 	
 

@@ -1,6 +1,8 @@
 package src.q1.src;
 
+import java.io.PrintWriter;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class DateTime {
 
@@ -15,6 +17,14 @@ public class DateTime {
 		if (minute < 0 || minute > 59)
 			throw new InputMismatchException("Invalid minute");
 		this.minutes = minute;
+	}
+	
+	public DateTime(Scanner scan)
+	{
+		String line = scan.nextLine();
+		String[] splitLine= line.split(" ");
+		hour = Integer.parseInt(splitLine[0]);
+		minutes = Integer.parseInt(splitLine[1]);
 	}
 
 	public int gethour() {
@@ -65,6 +75,11 @@ public class DateTime {
 
 	public int compareTo(DateTime other) {
 		return -1 * ((other.hour - this.hour) * 60) + ((other.minutes - this.minutes));
+	}
+	
+	public void saveToFile(PrintWriter file)
+	{
+		file.write(hour + " " + minutes + "\n");
 	}
 
 }
