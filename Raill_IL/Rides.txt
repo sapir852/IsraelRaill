@@ -1,0 +1,25 @@
+2
+haifa
+beer sheva
+3
+tel aviv university
+10 30
+tel aviv hahagana
+10 40
+holon
+10 55
+10 0
+11 30
+beer sheva
+haifa carmel
+4
+ashdod
+13 30
+holon
+14 0
+tel aviv 
+14 15
+haifa
+15 0
+13 0
+15 15
